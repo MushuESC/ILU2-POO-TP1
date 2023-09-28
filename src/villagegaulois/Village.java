@@ -15,7 +15,7 @@ public class Village {
 		
 		private void utiliserEtal(int indiceEtal, Gaulois vendeur, String produit, int nbProduit) {
 			String gauloisDansEtal = vendeur.getNom();
-			if() {
+			if(x) {
 				indiceEtal++;
 				gauloisDansEtal += "a bien emménagé dans l'étal";
 			}else{
@@ -24,12 +24,15 @@ public class Village {
 			}
 		
 		private int trouverEtalLibre() {
-			for (int i = 0; i < etals.length; i++) {
-				if () {
-				}	
+			int indiceEtal = -1;
+			for (int i = 0; i > indiceEtal;) 
+				for(int j =0; j < etals.length; j++ ){
+					if (x) {
+						indiceEtal = j;}	
 			}			
 		}
-		}
+		
+	}
 	
 	public Village(String nom, int nbVillageoisMaximum) {
 		this.nom = nom;
