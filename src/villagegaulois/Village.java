@@ -8,7 +8,29 @@ public class Village {
 	private Chef chef;
 	private Gaulois[] villageois;
 	private int nbVillageois = 0;
-
+	
+	private static class Marche{
+		protected int quantiteDebutMarche;
+		private Etal[] etals = new Etal[quantiteDebutMarche];	
+		
+		private void utiliserEtal(int indiceEtal, Gaulois vendeur, String produit, int nbProduit) {
+			String gauloisDansEtal = vendeur.getNom();
+			if() {
+				indiceEtal++;
+				gauloisDansEtal += "a bien emménagé dans l'étal";
+			}else{
+				gauloisDansEtal += "n'a pas pu emménager dans l'étal : l'étal était déjà occupé";
+				}			
+			}
+		
+		private int trouverEtalLibre() {
+			for (int i = 0; i < etals.length; i++) {
+				if () {
+				}	
+			}			
+		}
+		}
+	
 	public Village(String nom, int nbVillageoisMaximum) {
 		this.nom = nom;
 		villageois = new Gaulois[nbVillageoisMaximum];
