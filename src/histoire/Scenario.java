@@ -12,7 +12,7 @@ public class Scenario {
 
     public static void main(String[] args) {
         try {
-            Village village = new Village("le village des irréductibles", 10, 5);
+            Village village = new Village("le village des irréductibles", 10, 5);  // Créez une instance de Village
             Chef abraracourcix = new Chef("Abraracourcix", 10, village);
             village.setChef(abraracourcix);
             Druide druide = new Druide("Panoramix", 2, 5, 10);
@@ -42,9 +42,9 @@ public class Scenario {
             System.out.println(etalFleur.acheterProduit(15, obelix));
             System.out.println(etalFleur.acheterProduit(15, assurancetourix));
             System.out.println(village.partirVendeur(bonemine));
-            System.out.println(village.afficherMarche());
-            
-        } catch (VillageSansChefException e) {
+
+            System.out.println(village.afficherMarche());  
+        } catch (Village.VillageSansChefException e) {
             System.out.println("Erreur : " + e.getMessage());
         }
     }

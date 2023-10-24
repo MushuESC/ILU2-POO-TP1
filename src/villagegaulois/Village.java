@@ -4,6 +4,7 @@ import java.util.List;
 
 import personnages.Chef;
 import personnages.Gaulois;
+import villagegaulois.Etal.EtalNonOccupeException;
 
 public class Village {
 	private String nom;
@@ -79,7 +80,6 @@ public class Village {
 	            return chaine.toString();
 	        }
 	        
-	        
 	    }
 	
 	public Village(String nom, int nbVillageoisMaximum) {
@@ -103,33 +103,35 @@ public class Village {
 	}
 
 	public Gaulois trouverHabitant(String nomGaulois) {
-		if (nomGaulois.equals(chef.getNom())) {
-			return chef;
-		}
-		for (int i = 0; i < nbVillageois; i++) {
-			Gaulois gaulois = villageois[i];
-			if (gaulois.getNom().equals(nomGaulois)) {
-				return gaulois;
-			}
-		}
-		return null;
+	    if (nomGaulois.equals(chef.getNom())) {
+	        return chef;
+	    } else {
+	        Gaulois gauloisRecherche = null;
+	        for (int i = 0; i < nbVillageois && gauloisRecherche == null; i++) {
+	            Gaulois gaulois = villageois[i];
+	            if (gaulois.getNom().equals(nomGaulois)) {
+	                gauloisRecherche = gaulois;
+	            }
+	        }
+	        return gauloisRecherche;
+	    }
 	}
 
 	public String afficherVillageois() throws VillageSansChefException {
-	    if (chef == null) {
-	        throw new VillageSansChefException("Le village ne peut exister sans chef.");
-	    }
-	    StringBuilder chaine = new StringBuilder();
-	    if (nbVillageois < 1) {
-	        chaine.append("Il n'y a encore aucun habitant au village du chef " + chef.getNom() + ".\n");
-	    } else {
-	        chaine.append("Au village du chef " + chef.getNom() + " vivent les légendaires gaulois :\n");
-	        for (int i = 0; i < nbVillageois; i++) {
-	            chaine.append("- " + villageois[i].getNom() + "\n");
-	        }
-	    }
-	    return chaine.toString();
-	}
+        if (chef == null) {
+            throw new VillageSansChefException("Le village ne peut exister sans chef.");
+        }
+        StringBuilder chaine = new StringBuilder();
+        if (nbVillageois < 1) {
+            chaine.append("Il n'y a encore aucun habitant au village du chef " + chef.getNom() + ".\n");
+        } else {
+            chaine.append("Au village du chef " + chef.getNom() + " vivent les légendaires gaulois :\n");
+            for (int i = 0; i < nbVillageois; i++) {
+                chaine.append("- " + villageois[i].getNom() + "\n");
+            }
+        }
+        return chaine.toString();
+    }
 	
 	public String installerVendeur(Gaulois vendeur, String produit, int nbProduit) {
 	    int indiceEtalLibre = marche.trouverEtalLibre();
@@ -158,15 +160,17 @@ public class Village {
 	public String partirVendeur(Gaulois vendeur) {
 	    Etal etal = marche.trouverVendeur(vendeur);
 	    if (etal != null) {
-	        String message = etal.libererEtal(); // Appel de la méthode libererEtal de la classe Etal
-	        return vendeur.getNom() + " quitte son étal. " + message;
+	        try {
+	            String message = etal.libererEtal();
+	            return vendeur.getNom() + " quitte son étal. " + message;
+	        } catch (EtalNonOccupeException e) {
+	            // Gérer l'exception ici en imprimant un message d'erreur
+	            System.err.println("Erreur : " + e.getMessage());
+	        }
 	    } else {
 	        return vendeur.getNom() + " n'a pas d'étal où partir.\n";
 	    }
-	}
-
-	public String afficherMarche() {
-	    return marche.afficherMarche();
+	    return ""; // Retourner quelque chose, car la méthode doit retourner une chaîne
 	}
 	
 	public class VillageSansChefException extends Exception {
@@ -175,7 +179,6 @@ public class Village {
 	        super(message);
 	    }
 	}
+
 }
-
-
 

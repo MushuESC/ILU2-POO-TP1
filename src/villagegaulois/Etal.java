@@ -1,7 +1,6 @@
 package villagegaulois;
 
 import personnages.Gaulois;
-
 public class Etal {
     private Gaulois vendeur;
     private String produit;
@@ -30,25 +29,23 @@ public class Etal {
         }
     }
 
-    public String libererEtal() {
+    public String libererEtal() throws EtalNonOccupeException {
         if (!etalOccupe) {
-            throw new IllegalStateException("Impossible de libérer un étal non occupé.");
+            throw new EtalNonOccupeException("L'étal n'a pas été occupé.");
         }
 
         etalOccupe = false;
-        StringBuilder chaine = new StringBuilder(
-                "Le vendeur " + vendeur.getNom() + " quitte son étal, ");
+        StringBuilder chaine = new StringBuilder("Le vendeur " + vendeur.getNom() + " quitte son étal, ");
         int produitVendu = quantiteDebutMarche - quantite;
         if (produitVendu > 0) {
-            chaine.append(
-                    "il a vendu " + produitVendu + " parmi " + produit + ".\n");
+            chaine.append("il a vendu " + produitVendu + " parmi " + produit + ".\n");
         } else {
             chaine.append("il n'a malheureusement rien vendu.\n");
         }
 
         return chaine.toString();
     }
-
+    
     public String afficherEtal() {
         if (etalOccupe) {
             return "L'étal de " + vendeur.getNom() + " est garni de " + quantite
@@ -99,5 +96,13 @@ public class Etal {
             return produit.equals(produitRecherche);
         }
         return false;
+    }
+    
+    public class EtalNonOccupeException extends Exception {
+        private static final long serialVersionUID = 1L;
+
+        public EtalNonOccupeException(String message) {
+            super(message);
+        }
     }
 }
